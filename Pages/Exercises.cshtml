@@ -1,0 +1,40 @@
+﻿@page
+@model ExercisesModel
+@{
+    ViewData["Title"] = "Exercises";
+}
+
+<p>List of exercises</p>
+
+<div role="tabpanel">
+    <div class="list-group" id="exercisesList" role="tablist">
+        @foreach (var exercise in Model.Exercises)
+        {
+            <a class="list-group-item list-group-item-action" id="list-@exercise.Id" data-toggle="tab" href="#test" role="tab">
+                @exercise.Name
+            </a>
+        }
+    </div>
+
+    <div class="tab-content" id="nav-tabContent">
+        @foreach (var exercise in Model.Exercises)
+        {
+            <div class="tab-pane fade" id="test" role="tabpanel">
+                Id: @exercise.Id <br />
+                Name: @exercise.Name <br />
+                Description: @exercise.Description <br />
+                Hold: @exercise.Hold <br />
+            </div>
+        }
+    </div>
+</div>
+
+@section scripts
+{   
+    <script>
+        $('#exercisesList a').on('click', function (event) {
+            event.preventDefault()
+            $(this).tab('show')
+        })
+    </script>
+}

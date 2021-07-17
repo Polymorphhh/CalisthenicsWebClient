@@ -7,11 +7,16 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.7" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="wwwroot\css\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="CalisthenicsAPI">
+      <HintPath>..\CalisthenicsAPI\bin\Debug\net5.0\CalisthenicsAPI.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

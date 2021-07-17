@@ -7,13 +7,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace CalisthenicsWebClient.Pages
 {
-    public class ResponseModel : PageModel
+    public class TrainingsModel : PageModel
     {
-        public string ResponseBody { get; set; }
-
-        public void OnGet(string result)
+        public void OnGet()
         {
-            ResponseBody = result;
         }
     }
 }
