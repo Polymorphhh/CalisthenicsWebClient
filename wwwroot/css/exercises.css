@@ -1,0 +1,11 @@
+.list-group {
+  max-height: 300px;
+  margin-bottom: 10px;
+  overflow: auto;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.exercises-group {
+  margin-bottom: 50px;
+}

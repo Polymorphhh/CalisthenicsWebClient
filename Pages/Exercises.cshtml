@@ -4,37 +4,145 @@
     ViewData["Title"] = "Exercises";
 }
 
-<p>List of exercises</p>
-
-<div role="tabpanel">
-    <div class="list-group" id="exercisesList" role="tablist">
-        @foreach (var exercise in Model.Exercises)
-        {
-            <a class="list-group-item list-group-item-action" id="list-@exercise.Id" data-toggle="tab" href="#test" role="tab">
-                @exercise.Name
-            </a>
-        }
-    </div>
-
-    <div class="tab-content" id="nav-tabContent">
-        @foreach (var exercise in Model.Exercises)
-        {
-            <div class="tab-pane fade" id="test" role="tabpanel">
-                Id: @exercise.Id <br />
-                Name: @exercise.Name <br />
-                Description: @exercise.Description <br />
-                Hold: @exercise.Hold <br />
+<div class="container exercises-group">
+    <h3>List of exercises</h3>
+    <div class="row">
+        <div class="col-4">
+            <div class="list-group" id="list-tab" role="tablist">
+                @{
+                    foreach (var item in Model.Exercises)
+                    {
+                        <a class="list-group-item list-group-item-action" id="@item.Id" data-toggle="list"
+                            onclick="onClickListItem('@item.Id', '@item.Name', '@item.Description', '@item.Hold')">
+                            @item.Name
+                        </a>
+                    }
+                }
             </div>
-        }
+        </div>
+        <div class="col-8">          
+            <div class="tab-content" id="nav-tabContent">
+                <h4>Description</h4>
+                <div>
+                    <p id="exerciseListContentDescription">No exercise selected.</p>
+                    <p id="exerciseListContentHold"></p>
+                </div>
+            </div>
+
+            <div class="row">
+                <button class="btn btn-primary" style="margin-left: 15px" id="editModalButton">Edit</button>
+                <form asp-page-handler="delete" method="post">
+                    <input type="hidden" class="form-control" id="exerciseDeleteId" asp-for="SelectedExerciseId" />
+                    <button class="btn btn-primary" style="margin-left: 15px" id="deleteModalButton">Delete</button>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 
-@section scripts
-{   
+<div class="container">
+    <h3>Create a new exercise</h3>
+    <form method="post">
+        <div class="form-group">
+            <label for="exerciseInputName">Name</label>
+            <input type="text" class="form-control" id="exerciseInputName" asp-for="NewExercise.Name">
+        </div>
+        <div class="form-group">
+            <label for="exerciseInputDescription">Description</label>
+            <textarea type="text" class="form-control" id="exerciseInputDescription" asp-for="NewExercise.Description"></textarea>
+        </div>
+        <div class="form-group form-check">
+            <label for="exerciseInputHold">Hold</label>
+            <input type="checkbox" class="form-check-label" id="exerciseInputHold" asp-for="NewExercise.Hold">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">        
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Edit exercise</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form asp-page-handler="edit">
+                <div class="modal-body">
+                    <input type="hidden" class="form-control" id="exerciseId" asp-for="SelectedExerciseId"/>
+                    <div class="form-group">
+                        <label for="exerciseInputName">Name</label>
+                        <input type="text" class="form-control" id="exerciseEditInputName" asp-for="UpdateExercise.Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="exerciseInputDescription">Description</label>
+                        <textarea type="text" class="form-control" id="exerciseEditInputDescription" asp-for="UpdateExercise.Description"></textarea>
+                    </div>
+                    <div class="form-group form-check">
+                        <label for="exerciseInputHold">Hold</label>
+                        <input type="checkbox" class="form-check-label" id="exerciseEditInputHold" asp-for="UpdateExercise.Hold">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>                      
+        </div>      
+    </div>
+</div>
+
+@section Styles {
+    <link href="@Url.Content("~/css/exercises.css")" rel="stylesheet" type="text/css" />
+}
+
+@section Scripts {
     <script>
-        $('#exercisesList a').on('click', function (event) {
+        $('#editModal').modal({ show: false });
+
+        $('#editModalButton').on('click', function (event) {
             event.preventDefault()
-            $(this).tab('show')
-        })
+
+            var id = document.getElementById("exerciseId").value;
+
+            if (id > 0) {
+                $('#editModal').modal('show');
+            }
+            else {
+                alert("Please select an exercise first.");
+            }
+        });
+
+        $('#deleteModalButton').on('click', function (event) {
+            var id = document.getElementById("exerciseId").value;
+
+            if (id > 0) {
+                document.getElementById("exerciseDeleteId").value = id;
+            }
+            else {
+                event.preventDefault();
+                alert("Please select an exercise first.");
+            }
+        });
+
+        function onClickListItem(id, name, description, hold)
+        {
+            var pDescription = document.getElementById("exerciseListContentDescription");
+            var pHold = document.getElementById("exerciseListContentHold");
+
+            var modalId = document.getElementById("exerciseId");
+            var modalName = document.getElementById("exerciseEditInputName");
+            var modalDescription = document.getElementById("exerciseEditInputDescription");
+            var modalHold = document.getElementById("exerciseEditInputHold");
+
+            pDescription.innerHTML = description;
+            pHold.innerHTML = hold;
+
+            modalId.value = id;
+            modalName.value = name;
+            modalDescription.value = description;
+            modalHold.checked = (hold == "True");                     
+        }
     </script>
 }
