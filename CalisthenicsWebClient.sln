@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.31424.327
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalisthenicsWebClient", "CalisthenicsWebClient.csproj", "{F46133B1-F53B-44BF-910C-BEAB448CFC38}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalisthenicsDtos", "..\CalisthenicsDtos\CalisthenicsDtos.csproj", "{C57D0787-FDB2-43AB-ABD9-08D6D307DD5E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{F46133B1-F53B-44BF-910C-BEAB448CFC38}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F46133B1-F53B-44BF-910C-BEAB448CFC38}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F46133B1-F53B-44BF-910C-BEAB448CFC38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C57D0787-FDB2-43AB-ABD9-08D6D307DD5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C57D0787-FDB2-43AB-ABD9-08D6D307DD5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C57D0787-FDB2-43AB-ABD9-08D6D307DD5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C57D0787-FDB2-43AB-ABD9-08D6D307DD5E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
