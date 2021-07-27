@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using CalisthenicsDtos;
@@ -16,7 +17,11 @@ namespace CalisthenicsWebClient.Pages
 
         public IEnumerable<TrainingReadDto> Trainings { get; private set; }
 
+        [BindProperty]
+        public TrainingCreateDto NewTraining { get; set; }
+
         public bool GetTrainingsError { get; private set; }
+        public bool PostCreateNewTrainingError { get; private set; }
 
         public TrainingsModel(IHttpClientFactory clientFactory)
         {
@@ -40,6 +45,25 @@ namespace CalisthenicsWebClient.Pages
                 GetTrainingsError = true;
                 Trainings = Array.Empty<TrainingReadDto>();
             }
+        }
+
+        public async Task<IActionResult> OnPostCreate()
+        {
+            var content = new StringContent(
+                JsonSerializer.Serialize(NewTraining),
+                Encoding.UTF8,
+                "application/json");
+
+            var client = _clientFactory.CreateClient("calisthenics");
+            using var httpResponse = await client.PostAsync("trainings", content);
+
+            if (!httpResponse.IsSuccessStatusCode)
+            {
+                PostCreateNewTrainingError = true;
+                return RedirectToPage("/Error");
+            }
+
+            return RedirectToPage("/Trainings");
         }
     }
 }
