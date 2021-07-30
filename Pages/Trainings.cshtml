@@ -87,11 +87,35 @@
                     <textarea type="text" class="form-control" id="trainingInputDescription" asp-for="NewTraining.Description"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="button" class="btn btn-secondary" id="editSetsModalButton">Edit Set(s)</button>
             </form>
         </div>
-        <div class="col-8 verticalLine">
+        <div class="col-8 verticalLine" id="setsPreview">
             <!-- Sets and exercises preview -->
             <p>Sets Preview</p>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Set Modal -->
+<div class="modal fade" id="editSetsModal" tabindex="-1" role="dialog" aria-labelledby="editSetsModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editSetsModalLabel">Edit Set(s)</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form asp-page-handler="edit">
+                <div class="modal-body">
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -103,6 +127,8 @@
 
 @section Scripts {
     <script>
+        $('#editSetsModal').modal({ show: false });
+
         function onClickListItem(id, description) {
             var pDescription = document.getElementById("trainingListContentDescription");
             pDescription.innerHTML = description;
@@ -124,6 +150,15 @@
                     .toggleClass('glyphicon-chevron-right')
                     .toggleClass('glyphicon-chevron-down');
             });
+        });
+
+        function onSetUpdate() {
+            console.log("TOTO");
+        }
+      
+        $('#editSetsModalButton').on('click', function (event) {
+            event.preventDefault()
+            $('#editSetsModal').modal('show');
         });
     </script>
 }
